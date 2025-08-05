@@ -1,0 +1,6 @@
+
+applications:
+- name: research-agent
+  memory: 256M
+  buildpack: python_buildpack
+  command: python app/main.py
