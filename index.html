@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Research Agent</title>
+</head>
+<body>
+    <h1>Research Agent</h1>
+    <form id="queryForm">
+        <input type="text" id="topic" placeholder="Enter research topic">
+        <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
+    <script>
+        document.getElementById('queryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const topic = document.getElementById('topic').value;
+            const res = await fetch('/query', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ topic })
+            });
+            const data = await res.json();
+            const resultDiv = document.getElementById('results');
+            resultDiv.innerHTML = '';
+            data.forEach(paper => {
+                resultDiv.innerHTML += `<h3>${paper.title}</h3><p>${paper.summary}</p><a href="${paper.url}" target="_blank">Read More</a><hr>`;
+            });
+        });
+    </script>
+</body>
+</html>
